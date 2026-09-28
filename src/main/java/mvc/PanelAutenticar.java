@@ -4,19 +4,28 @@
  */
 package mvc;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author maria
  */
-public class PanelAutenticar extends javax.swing.JPanel {
+public class PanelAutenticar extends JPanel {
 
+    private VistaRetiro padre;
+    
     /**
      * Creates new form PanelAutenticar
      */
     public PanelAutenticar() {
         initComponents();
+        setVisible(true);
     }
 
+    public void setPadre(VistaRetiro padre){
+        this.padre = padre;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,11 +45,10 @@ public class PanelAutenticar extends javax.swing.JPanel {
         lblIngresar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblIngresar.setText("Ingresar Número Cuenta");
 
-        txtCuenta.addActionListener(this::txtCuentaActionPerformed);
-
         btnIngresar.setBackground(new java.awt.Color(229, 224, 216));
         btnIngresar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(this::btnIngresarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -70,9 +78,11 @@ public class PanelAutenticar extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCuentaActionPerformed
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCuentaActionPerformed
+        padre.ingresarCuenta(txtCuenta.getText());
+        txtCuenta.setText("");
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

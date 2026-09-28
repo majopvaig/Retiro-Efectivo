@@ -11,6 +11,11 @@ package mvc;
 public class ExamenU1RetiroEfectivo {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
+        ModeloRetiro modelo = new ModeloRetiro();
+        ControlRetiro control = new ControlRetiro(modelo);
+        PanelEstadoCuenta pnlE = new PanelEstadoCuenta();
+        PanelRecibo pnlR = new PanelRecibo();
+        VistaRetiro vista = new VistaRetiro(control, modelo, pnlR, pnlE);   
     }
 }

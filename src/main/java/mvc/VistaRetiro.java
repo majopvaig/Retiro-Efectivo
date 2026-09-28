@@ -4,17 +4,116 @@
  */
 package mvc;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author maria
  */
-public class VistaRetiro extends javax.swing.JFrame {
+public class VistaRetiro extends JFrame implements IObserverRetiro {
 
+    private ControlRetiro control;
+    private IModeloRetiro modelo;
+    private PanelRecibo pnlRecibo;
+    private PanelEstadoCuenta pnlEstado;
+    private boolean montoSeleccionado = false;
+    
     /**
      * Creates new form VistaRetiro
      */
-    public VistaRetiro() {
+    public VistaRetiro(ControlRetiro control, IModeloRetiro modelo, PanelRecibo pnlR, PanelEstadoCuenta pnlE) {
         initComponents();
+        this.control = control;
+        this.modelo = modelo;
+        this.pnlRecibo = pnlR;
+        this.pnlEstado = pnlE;
+        setVisible(true);
+        setLocationRelativeTo(null);
+        btnRetirar.setEnabled(false);
+        vistaIngresar();
+        modelo.suscribir(this);
+    }
+    
+    private void vistaIngresar(){
+        lblIngresar.setVisible(true);
+        txtCuenta.setVisible(true);
+        btnIngreso.setVisible(true);
+        btn200.setVisible(false);
+        btn400.setVisible(false);
+        btn600.setVisible(false);
+        btn800.setVisible(false);
+        btn1000.setVisible(false);
+        btn1200.setVisible(false);
+        btn1400.setVisible(false);
+        btn1600.setVisible(false);
+        btn1800.setVisible(false);
+        btn2000.setVisible(false);
+        btnRetirar.setVisible(false);
+        pnlContenedor.setVisible(false);
+        lblCantidades.setVisible(false);
+    }
+    
+    private void mostrarCajero(){
+        lblCantidades.setVisible(true);
+        btn200.setVisible(true);
+        btn400.setVisible(true);
+        btn600.setVisible(true);
+        btn800.setVisible(true);
+        btn1000.setVisible(true);
+        btn1200.setVisible(true);
+        btn1400.setVisible(true);
+        btn1600.setVisible(true);
+        btn1800.setVisible(true);
+        btn2000.setVisible(true);
+        btnRetirar.setVisible(true);
+        lblIngresar.setVisible(false);
+        txtCuenta.setVisible(false);
+        btnIngreso.setVisible(false);
+        pnlContenedor.setVisible(true);
+        pnlEstado.update(modelo);
+    }
+    
+    public void pintarPanelEstado() {
+        pnlContenedor.removeAll();
+        pnlContenedor.setLayout(new BorderLayout());
+        pnlContenedor.setVisible(true);
+
+        pnlEstado.setSize(pnlContenedor.getWidth(), pnlContenedor.getHeight());
+        pnlEstado.setLocation(0, 0);
+
+        pnlContenedor.add(pnlEstado, BorderLayout.CENTER);
+        pnlContenedor.setVisible(true);
+
+        pnlContenedor.revalidate();
+        pnlContenedor.repaint();
+    }
+    
+    private void pintarPanelRecibo(){
+        pnlContenedor.removeAll();
+        pnlContenedor.setLayout(new BorderLayout());
+        pnlContenedor.setVisible(true);
+        pnlRecibo.setSize(pnlContenedor.getWidth(), pnlContenedor.getHeight());
+        pnlRecibo.setLocation(0, 0);
+        pnlContenedor.add(pnlRecibo, BorderLayout.CENTER);
+        pnlContenedor.setVisible(true);
+        pnlContenedor.revalidate();
+        pnlContenedor.repaint();
+    }
+    
+    private void limpiarBotones(){
+        btn200.setBackground(new Color(210,171,128));
+        btn400.setBackground(new Color(210,171,128));
+        btn600.setBackground(new Color(210,171,128));
+        btn800.setBackground(new Color(210,171,128));
+        btn1000.setBackground(new Color(210,171,128));
+        btn1200.setBackground(new Color(210,171,128));
+        btn1400.setBackground(new Color(210,171,128));
+        btn1600.setBackground(new Color(210,171,128));
+        btn1800.setBackground(new Color(210,171,128));
+        btn2000.setBackground(new Color(210,171,128));
     }
 
     /**
@@ -28,20 +127,23 @@ public class VistaRetiro extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        lblBanco = new javax.swing.JLabel();
+        lblCantidades = new javax.swing.JLabel();
+        btn200 = new javax.swing.JButton();
+        btn1000 = new javax.swing.JButton();
+        btn400 = new javax.swing.JButton();
+        btn800 = new javax.swing.JButton();
+        btn600 = new javax.swing.JButton();
+        btn1400 = new javax.swing.JButton();
+        btn1600 = new javax.swing.JButton();
+        btn1800 = new javax.swing.JButton();
+        btn2000 = new javax.swing.JButton();
+        btn1200 = new javax.swing.JButton();
+        btnRetirar = new javax.swing.JButton();
+        pnlContenedor = new javax.swing.JPanel();
+        lblIngresar = new javax.swing.JLabel();
+        txtCuenta = new javax.swing.JTextField();
+        btnIngreso = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(179, 183, 146));
@@ -50,103 +152,125 @@ public class VistaRetiro extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(128, 150, 113));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mvc/resources/credit-card (1) (1).png"))); // NOI18N
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
-        jLabel2.setText("BorregoATM");
+        lblBanco.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
+        lblBanco.setForeground(new java.awt.Color(255, 255, 255));
+        lblBanco.setText("BorregoATM");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(285, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblBanco)
+                .addGap(316, 316, 316))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(15, 15, 15))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(lblBanco)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel3.setText("Cantidades a Retirar");
+        lblCantidades.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCantidades.setText("Cantidades a Retirar");
 
-        jButton1.setBackground(new java.awt.Color(210, 171, 128));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("$200.00");
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btn200.setBackground(new java.awt.Color(210, 171, 128));
+        btn200.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn200.setForeground(new java.awt.Color(255, 255, 255));
+        btn200.setText("$200.00");
+        btn200.setBorderPainted(false);
+        btn200.addActionListener(this::btn200ActionPerformed);
 
-        jButton2.setBackground(new java.awt.Color(210, 171, 128));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("$1000.00");
-        jButton2.setBorderPainted(false);
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btn1000.setBackground(new java.awt.Color(210, 171, 128));
+        btn1000.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn1000.setForeground(new java.awt.Color(255, 255, 255));
+        btn1000.setText("$1000.00");
+        btn1000.setBorderPainted(false);
+        btn1000.addActionListener(this::btn1000ActionPerformed);
 
-        jButton3.setBackground(new java.awt.Color(210, 171, 128));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("$400.00");
-        jButton3.setBorderPainted(false);
+        btn400.setBackground(new java.awt.Color(210, 171, 128));
+        btn400.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn400.setForeground(new java.awt.Color(255, 255, 255));
+        btn400.setText("$400.00");
+        btn400.setBorderPainted(false);
+        btn400.addActionListener(this::btn400ActionPerformed);
 
-        jButton4.setBackground(new java.awt.Color(210, 171, 128));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("$800.00");
-        jButton4.setBorderPainted(false);
+        btn800.setBackground(new java.awt.Color(210, 171, 128));
+        btn800.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn800.setForeground(new java.awt.Color(255, 255, 255));
+        btn800.setText("$800.00");
+        btn800.setBorderPainted(false);
+        btn800.addActionListener(this::btn800ActionPerformed);
 
-        jButton5.setBackground(new java.awt.Color(210, 171, 128));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("$600.00");
-        jButton5.setBorderPainted(false);
+        btn600.setBackground(new java.awt.Color(210, 171, 128));
+        btn600.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn600.setForeground(new java.awt.Color(255, 255, 255));
+        btn600.setText("$600.00");
+        btn600.setBorderPainted(false);
+        btn600.addActionListener(this::btn600ActionPerformed);
 
-        jButton6.setBackground(new java.awt.Color(210, 171, 128));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("$1400.00");
-        jButton6.setBorderPainted(false);
+        btn1400.setBackground(new java.awt.Color(210, 171, 128));
+        btn1400.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn1400.setForeground(new java.awt.Color(255, 255, 255));
+        btn1400.setText("$1400.00");
+        btn1400.setBorderPainted(false);
+        btn1400.addActionListener(this::btn1400ActionPerformed);
 
-        jButton7.setBackground(new java.awt.Color(210, 171, 128));
-        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("$1600.00");
-        jButton7.setBorderPainted(false);
+        btn1600.setBackground(new java.awt.Color(210, 171, 128));
+        btn1600.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn1600.setForeground(new java.awt.Color(255, 255, 255));
+        btn1600.setText("$1600.00");
+        btn1600.setBorderPainted(false);
+        btn1600.addActionListener(this::btn1600ActionPerformed);
 
-        jButton8.setBackground(new java.awt.Color(210, 171, 128));
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("$1800.00");
-        jButton8.setBorderPainted(false);
+        btn1800.setBackground(new java.awt.Color(210, 171, 128));
+        btn1800.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn1800.setForeground(new java.awt.Color(255, 255, 255));
+        btn1800.setText("$1800.00");
+        btn1800.setBorderPainted(false);
+        btn1800.addActionListener(this::btn1800ActionPerformed);
 
-        jButton9.setBackground(new java.awt.Color(210, 171, 128));
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("$2000.00");
-        jButton9.setBorderPainted(false);
+        btn2000.setBackground(new java.awt.Color(210, 171, 128));
+        btn2000.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn2000.setForeground(new java.awt.Color(255, 255, 255));
+        btn2000.setText("$2000.00");
+        btn2000.setBorderPainted(false);
+        btn2000.addActionListener(this::btn2000ActionPerformed);
 
-        jButton10.setBackground(new java.awt.Color(210, 171, 128));
-        jButton10.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("$1200.00");
-        jButton10.setBorderPainted(false);
+        btn1200.setBackground(new java.awt.Color(210, 171, 128));
+        btn1200.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btn1200.setForeground(new java.awt.Color(255, 255, 255));
+        btn1200.setText("$1200.00");
+        btn1200.setBorderPainted(false);
+        btn1200.addActionListener(this::btn1200ActionPerformed);
 
-        jButton11.setBackground(new java.awt.Color(128, 150, 113));
-        jButton11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("RETIRAR EFECTIVO");
-        jButton11.setBorderPainted(false);
-        jButton11.addActionListener(this::jButton11ActionPerformed);
+        btnRetirar.setBackground(new java.awt.Color(128, 150, 113));
+        btnRetirar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnRetirar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRetirar.setText("RETIRAR EFECTIVO");
+        btnRetirar.setBorderPainted(false);
+        btnRetirar.addActionListener(this::btnRetirarActionPerformed);
+
+        javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
+        pnlContenedor.setLayout(pnlContenedorLayout);
+        pnlContenedorLayout.setHorizontalGroup(
+            pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 364, Short.MAX_VALUE)
+        );
+        pnlContenedorLayout.setVerticalGroup(
+            pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 504, Short.MAX_VALUE)
+        );
+
+        lblIngresar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblIngresar.setText("Ingresar cuenta:");
+
+        btnIngreso.setBackground(new java.awt.Color(229, 224, 216));
+        btnIngreso.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnIngreso.setText("RETIRAR");
+        btnIngreso.addActionListener(this::btnIngresoActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -156,61 +280,79 @@ public class VistaRetiro extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
+                        .addGap(50, 50, 50)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn2000, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btn1400, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btn1600, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btn800, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btn1000, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(61, 61, 61)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(61, 61, 61)
+                                    .addComponent(btn200, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(50, 50, 50)
+                                    .addComponent(btn400, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(50, 50, 50)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(178, 178, 178)
-                        .addComponent(jButton11))
+                            .addComponent(btn600, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn1800, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn1200, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(159, 159, 159)
-                        .addComponent(jLabel3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRetirar)
+                            .addComponent(lblCantidades)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(lblIngresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(215, 215, 215)
+                        .addComponent(btnIngreso)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jLabel3)
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblIngresar)
+                            .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnIngreso)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblCantidades)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn400, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn200, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn600, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn800, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn1200, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn1000, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn1600, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn1400, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn1800, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addComponent(btn2000, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(btnRetirar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,35 +369,166 @@ public class VistaRetiro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void btnRetirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+        if(montoSeleccionado){
+            retirar();
+        }
+    }//GEN-LAST:event_btnRetirarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn200ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn200ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        limpiarBotones();
+        btn200.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(200.00f);
+    }//GEN-LAST:event_btn200ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn1000ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1000ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        limpiarBotones();
+        btn1000.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(1000.00f);
+    }//GEN-LAST:event_btn1000ActionPerformed
+
+    private void btn400ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn400ActionPerformed
+        // TODO add your handling code here:
+        limpiarBotones();
+        btn400.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(400.00f);
+    }//GEN-LAST:event_btn400ActionPerformed
+
+    private void btn600ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn600ActionPerformed
+        // TODO add your handling code here:
+        limpiarBotones();
+        btn600.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(600.00f);
+    }//GEN-LAST:event_btn600ActionPerformed
+
+    private void btn800ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn800ActionPerformed
+        // TODO add your handling code here:
+        limpiarBotones();
+        btn800.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(800.00f);
+    }//GEN-LAST:event_btn800ActionPerformed
+
+    private void btn1200ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1200ActionPerformed
+        // TODO add your handling code here:
+        limpiarBotones();
+        btn1200.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(1200.00f);
+    }//GEN-LAST:event_btn1200ActionPerformed
+
+    private void btn1400ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1400ActionPerformed
+        // TODO add your handling code here:
+        limpiarBotones();
+        btn1400.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(1400.00f);
+    }//GEN-LAST:event_btn1400ActionPerformed
+
+    private void btn1600ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1600ActionPerformed
+        // TODO add your handling code here:
+        limpiarBotones();
+        btn1600.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(1600.00f);
+    }//GEN-LAST:event_btn1600ActionPerformed
+
+    private void btn1800ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1800ActionPerformed
+        // TODO add your handling code here:
+        limpiarBotones();
+        btn1800.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(1800.00f);
+    }//GEN-LAST:event_btn1800ActionPerformed
+
+    private void btn2000ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2000ActionPerformed
+        // TODO add your handling code here:
+        limpiarBotones();
+        btn2000.setBackground(new Color(114, 92, 58));
+        montoSeleccionado = true;
+        btnRetirar.setEnabled(true);
+        escogerMonto(2000.00f);
+    }//GEN-LAST:event_btn2000ActionPerformed
+
+    private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
+        // TODO add your handling code here:
+        ingresarCuenta(txtCuenta.getText());
+    }//GEN-LAST:event_btnIngresoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btn1000;
+    private javax.swing.JButton btn1200;
+    private javax.swing.JButton btn1400;
+    private javax.swing.JButton btn1600;
+    private javax.swing.JButton btn1800;
+    private javax.swing.JButton btn200;
+    private javax.swing.JButton btn2000;
+    private javax.swing.JButton btn400;
+    private javax.swing.JButton btn600;
+    private javax.swing.JButton btn800;
+    private javax.swing.JButton btnIngreso;
+    private javax.swing.JButton btnRetirar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblBanco;
+    private javax.swing.JLabel lblCantidades;
+    private javax.swing.JLabel lblIngresar;
+    private javax.swing.JPanel pnlContenedor;
+    private javax.swing.JTextField txtCuenta;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(IModeloRetiro modelo) {
+        if(modelo.getError() != null && !modelo.getError().isBlank()){
+            mostrarError();
+            montoSeleccionado = false;
+            limpiarBotones();
+            return;
+        }
+        if(modelo.getNombreUsuario() != null && !modelo.getNombreUsuario().isBlank()){
+            pintarPanelEstado();
+            pnlEstado.update(modelo);
+            mostrarCajero();
+        }
+        if(modelo.getRetiro() != null){
+            pnlEstado.update(modelo);
+        }
+        if(modelo.getRecibo() != null){
+            pintarPanelRecibo();
+            pnlRecibo.update(modelo);
+        }
+    }
+    
+    public void ingresarCuenta(String num){
+        control.autenticarUsuario(num);
+    }
+    
+    private void mostrarError(){
+        JOptionPane.showMessageDialog(this, modelo.getError());
+    }
+    
+    public void escogerMonto(Float monto){
+        control.validarMontoRetirar(monto);
+    }
+    
+    public void retirar(){
+        control.retirar();
+    }
 }

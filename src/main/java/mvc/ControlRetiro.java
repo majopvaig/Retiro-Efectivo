@@ -12,6 +12,10 @@ public class ControlRetiro {
     
     private ModeloRetiro modelo;
     
+    public ControlRetiro(ModeloRetiro modelo){
+        this.modelo = modelo;
+    }
+    
     public void autenticarUsuario(String num){
         modelo.autenticarUsuario(num);
     }

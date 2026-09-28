@@ -4,19 +4,42 @@
  */
 package mvc;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author maria
  */
-public class PanelEstadoCuenta extends javax.swing.JPanel {
-
+public class PanelEstadoCuenta extends JPanel {
+    
     /**
      * Creates new form PanelEstadoCuenta
      */
     public PanelEstadoCuenta() {
         initComponents();
-    }
+        
+        /*
+            lo que siempre se ve del panel
+        */
+        lblNombre.setVisible(true);
+        lblSaldo.setVisible(true);
+        txtNombre.setVisible(true);
+        txtSaldo.setVisible(true);
 
+        /* 
+            las cosas de pantalla que no se desbloquean hasta que el
+            usuario escogió un monto a retirar.
+         */
+        lblRetiro.setVisible(false);
+        txtRetiro.setVisible(false);
+        lblComision.setVisible(false);
+        txtComision.setVisible(false);
+        lbl10.setVisible(false);
+        lblMontoFinal.setVisible(false);
+        txtMontoFinal.setVisible(false);
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,7 +162,23 @@ public class PanelEstadoCuenta extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
+    public void update(IModeloRetiro modelo){
+        txtNombre.setText(modelo.getNombreUsuario());
+        txtSaldo.setText(modelo.getSaldoUsuario());
+        if(modelo.getRetiro() != null){
+            lblRetiro.setVisible(true);
+            txtRetiro.setVisible(true);
+            txtRetiro.setText("$"+modelo.getRetiro());
+            lblComision.setVisible(true);
+            txtComision.setVisible(true);
+            txtComision.setText("$"+modelo.getComision());
+            lbl10.setVisible(true);
+            lblMontoFinal.setVisible(true);
+            txtMontoFinal.setVisible(true);
+            txtMontoFinal.setText("$"+modelo.getTotalDescontar());
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lbl10;
     private javax.swing.JLabel lblComision;
